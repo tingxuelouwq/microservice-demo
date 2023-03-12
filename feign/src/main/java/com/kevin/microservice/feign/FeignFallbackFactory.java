@@ -1,6 +1,6 @@
 package com.kevin.microservice.feign;
 
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
