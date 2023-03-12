@@ -1,0 +1,21 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservice-zuul
+
+eureka:
+  instance:
+    instance-id: microservice-zuul-9527
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+zuul:
+  routes:
+    producer:
+      serviceId: microservice-producer
+      path: /producer/**
+  ignored-services:
+    - microservice-producer
