@@ -22,7 +22,8 @@
         <module>producer</module>
         <module>eureka</module>
         <module>feign</module>
-        <module>zuul</module>
+        <module>gateway</module>
+        <module>websocket</module>
     </modules>
 
     <packaging>pom</packaging>
