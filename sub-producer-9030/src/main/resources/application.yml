@@ -1,0 +1,11 @@
+server:
+  port: 9030
+
+spring:
+  application:
+    name: microservice-sub-producer
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-sub-producer-9030
+        prefer-ip-address: true

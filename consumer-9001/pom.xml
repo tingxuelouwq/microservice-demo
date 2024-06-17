@@ -8,16 +8,23 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>producer-9021</artifactId>
+    <artifactId>consumer-9001</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>producer-9021</name>
-    <description>producer-9021</description>
+    <name>consumer-9001</name>
+    <description>consumer-9001</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -28,14 +35,17 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kevin.microservice</groupId>
+            <artifactId>producer-feign</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.kevin.microservice</groupId>
-            <artifactId>sub-producer-feign</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
     </dependencies>
-
 </project>

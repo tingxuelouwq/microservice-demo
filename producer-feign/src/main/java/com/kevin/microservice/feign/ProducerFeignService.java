@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 //@FeignClient(value = "MICROSERVICE-PRODUCER", fallbackFactory = FeignFallbackFactory.class)
 //@FeignClient(value = "MICROSERVICE-PRODUCER")
-@FeignClient(value = "microservice-producer")
+@FeignClient(value = "microservice-producer", fallbackFactory = ProducerFeignFallbackFactory.class)
 public interface ProducerFeignService {
 
     @GetMapping("/query")

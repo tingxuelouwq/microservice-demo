@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 9001
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
   cloud:
     consul:
       discovery:
-        instance-id: microservice-consumer-9000
+        instance-id: microservice-consumer-9001
         prefer-ip-address: true
 
 feign:

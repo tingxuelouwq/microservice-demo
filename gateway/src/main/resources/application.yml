@@ -17,12 +17,18 @@ spring:
             - Path=/microservice-consumer/**
           filters:
             - StripPrefix=1
-        - id: microservice-consumer
+        - id: microservice-producer
           uri: lb://microservice-producer
           predicates:
             - Path=/microservice-producer/**
           filters:
             - StripPrefix=1
+        - id: microservice-sub-producer
+            uri: lb://microservice-sub-producer
+            predicates:
+              - Path=/microservice-sub-producer/**
+            filters:
+              - StripPrefix=1
         - id: microservice-websocket
           uri: lb:ws://microservice-websocket
           predicates:

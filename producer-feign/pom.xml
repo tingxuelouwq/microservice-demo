@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>consumer-feign</artifactId>
-    <name>consumer-feign</name>
-    <description>consumer-feign</description>
+    <artifactId>producer-feign</artifactId>
+    <name>producer-feign</name>
+    <description>producer-feign</description>
 
     <dependencies>
         <dependency>

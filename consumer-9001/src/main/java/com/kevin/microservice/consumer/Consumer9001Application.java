@@ -10,10 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.kevin.microservice"})
 @ComponentScan(basePackages = {"com.kevin.microservice"})
-public class Consumer9000Application {
+public class Consumer9001Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Consumer9000Application.class, args);
+        SpringApplication.run(Consumer9001Application.class, args);
     }
 
 }

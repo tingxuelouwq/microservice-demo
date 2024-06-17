@@ -30,6 +30,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.kevin.microservice</groupId>
+            <artifactId>sub-producer-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
