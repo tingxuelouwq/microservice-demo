@@ -18,10 +18,11 @@
     </properties>
 
     <modules>
-        <module>consumer</module>
-        <module>producer</module>
+        <module>consumer-9000</module>
+        <module>producer-9020</module>
+        <module>producer-9021</module>
+        <module>producer-feign</module>
         <module>eureka</module>
-        <module>feign</module>
         <module>gateway</module>
         <module>websocket</module>
     </modules>

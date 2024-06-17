@@ -11,7 +11,13 @@ spring:
 #          enabled: true
 #          lower-case-service-id: true
       routes:
-        - id: microservice-producer
+        - id: microservice-consumer
+          uri: lb://microservice-consumer
+          predicates:
+            - Path=/microservice-consumer/**
+          filters:
+            - StripPrefix=1
+        - id: microservice-consumer
           uri: lb://microservice-producer
           predicates:
             - Path=/microservice-producer/**
@@ -23,11 +29,9 @@ spring:
             - Path=/microservice-websocket/**
           filters:
             - StripPrefix=1
-eureka:
-  instance:
-    instance-id: microservice-gateway-9527
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/
+    consul:
+      discovery:
+        instance-id: microservice-gateway-9527
+        prefer-ip-address: true
+
 

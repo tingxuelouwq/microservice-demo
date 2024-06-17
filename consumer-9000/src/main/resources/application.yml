@@ -1,0 +1,15 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: microservice-consumer
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-consumer-9000
+        prefer-ip-address: true
+
+feign:
+  circuitbreaker:
+    enabled: true

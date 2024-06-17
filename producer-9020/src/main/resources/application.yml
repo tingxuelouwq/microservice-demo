@@ -1,0 +1,11 @@
+server:
+  port: 9020
+
+spring:
+  application:
+    name: microservice-producer
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-producer-9020
+        prefer-ip-address: true

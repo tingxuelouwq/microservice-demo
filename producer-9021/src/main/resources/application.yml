@@ -1,0 +1,13 @@
+server:
+  port: 9021
+
+spring:
+  application:
+    name: microservice-producer
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-producer-9021
+        prefer-ip-address: true
+        metadata:
+          gray-tag: true
