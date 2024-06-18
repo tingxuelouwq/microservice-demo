@@ -19,15 +19,17 @@
 
     <modules>
         <module>consumer-9001</module>
+        <module>consumer-9002</module>
         <module>producer-9020</module>
         <module>producer-9021</module>
         <module>producer-feign</module>
         <module>eureka</module>
-        <module>gateway</module>
-        <module>websocket</module>
+        <module>gateway-9527</module>
+        <module>websocket-9050</module>
         <module>sub-producer-9030</module>
         <module>sub-producer-9031</module>
         <module>sub-producer-feign</module>
+        <module>loadbalancer-config</module>
     </modules>
 
     <packaging>pom</packaging>

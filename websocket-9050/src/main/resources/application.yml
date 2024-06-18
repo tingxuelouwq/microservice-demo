@@ -1,0 +1,11 @@
+server:
+  port: 9050
+
+spring:
+  application:
+    name: microservice-websocket
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-websocket-9050
+        prefer-ip-address: true
