@@ -1,6 +1,8 @@
 package com.kevin.microservice.producer;
 
 import com.kevin.microservice.feign.SubProducerFeignService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class ProducerController {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Value("${server.port}")
     private String serverPort;
 
@@ -23,8 +27,8 @@ public class ProducerController {
     private SubProducerFeignService subProducerFeignService;
 
     @GetMapping("/query")
-    public String query(@RequestParam(value = "name") String name) {
-        String result = "query:" + name + ", serverPort=" + serverPort;
+    public String query(@RequestParam(value = "name") String name, HttpServletRequest request) {
+        String result = "query:" + name + ", serverPort=" + serverPort + ", request-gray: " + request.getHeader("gray-tag");
         System.out.println(result);
         return result;
     }
@@ -35,7 +39,8 @@ public class ProducerController {
     }
 
     @GetMapping("/sub-query")
-    public String subQuery(@RequestParam(value = "name") String name) {
+    public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
+        logger.info("query:" + name + ", serverPort=" + serverPort + ", request-gray: " + request.getHeader("gray-tag"));
         String result = subProducerFeignService.subQuery(name);
         System.out.println(result);
         return result;

@@ -17,16 +17,19 @@
         <module name="sub-producer-feign" />
         <module name="producer-feign" />
         <module name="loadbalancer-config" />
+        <module name="gateway-9528" />
         <module name="gateway-9527" />
         <module name="consumer-9002" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common" target="11" />
       <module name="consumer-9000" target="11" />
       <module name="consumer-9001" target="11" />
       <module name="consumer-9002" target="11" />
       <module name="eureka" target="11" />
       <module name="gateway-9527" target="11" />
+      <module name="gateway-9528" target="11" />
       <module name="loadbalancer-config" target="11" />
       <module name="microservice-demo" target="11" />
       <module name="producer-9020" target="11" />

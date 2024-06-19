@@ -42,6 +42,12 @@ public class ConsumerController {
         return producerFeignService.query(name);
     }
 
+    @GetMapping("/sub-query")
+    public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
+        logger.info("appName: {}, serverPort: {}, request-gray: {}", appName, serverPort, request.getHeader("gray-tag"));
+        return producerFeignService.subQuery(name);
+    }
+
     @GetMapping("/test")
     public void hystrixText() throws InterruptedException {
         for (int i = 0; i < 135; i++) {

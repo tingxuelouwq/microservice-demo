@@ -15,4 +15,7 @@ public interface ProducerFeignService {
 
     @GetMapping("/query")
     String query(@RequestParam(value = "name") String name);
+
+    @GetMapping("/sub-query")
+    public String subQuery(@RequestParam(value = "name") String name);
 }

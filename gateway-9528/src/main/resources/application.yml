@@ -1,5 +1,5 @@
 server:
-  port: 9527
+  port: 9528
 
 spring:
   application:
@@ -9,10 +9,10 @@ spring:
   cloud:
     consul:
       discovery:
-        instance-id: microservice-gateway-9527
+        instance-id: microservice-gateway-9528
         prefer-ip-address: true
         metadata:
-          gray-tag: false
+          gray-tag: true
     gateway:
 #      discovery:
 #        locator:

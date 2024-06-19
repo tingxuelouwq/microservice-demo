@@ -16,6 +16,11 @@ public class ProducerFeignFallbackFactory implements FallbackFactory<ProducerFei
            public String query(String name) {
                return "查询:" + name + "时降级";
            }
+
+           @Override
+           public String subQuery(String name) {
+               return "二级查询:" + name + "时降级";
+           }
        };
     }
 }

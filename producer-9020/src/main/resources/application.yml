@@ -9,3 +9,5 @@ spring:
       discovery:
         instance-id: microservice-producer-9020
         prefer-ip-address: true
+        metadata:
+          gray-tag: false

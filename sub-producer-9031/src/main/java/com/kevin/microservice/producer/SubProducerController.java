@@ -18,8 +18,8 @@ public class SubProducerController {
     private String serverPort;
 
     @GetMapping("/sub-query")
-    public String subQuery(@RequestParam(value = "name") String name) {
-        String result = "sub-query:" + name + ", serverPort=" + serverPort;
+    public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
+        String result = "sub-query:" + name + ", serverPort=" + serverPort + ", request-gray: " + request.getHeader("gray-tag");
         System.out.println(result);
         return result;
     }
