@@ -5,9 +5,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.*;
+import org.springframework.cloud.client.loadbalancer.DefaultResponse;
+import org.springframework.cloud.client.loadbalancer.EmptyResponse;
+import org.springframework.cloud.client.loadbalancer.Request;
+import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.*;
-import org.springframework.http.HttpHeaders;
+import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
     private static final Log log = LogFactory.getLog(RoundRobinLoadBalancer.class);
 
@@ -30,7 +33,7 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
      * {@link ServiceInstanceListSupplier} that will be used to get available instances
      * @param serviceId id of the service for which to choose an instance
      */
-    public GrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
+    public FailoverLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
                                   String serviceId) {
         this(serviceInstanceListSupplierProvider, serviceId, new Random().nextInt(1000));
     }
@@ -41,7 +44,7 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
      * @param serviceId id of the service for which to choose an instance
      * @param seedPosition Round Robin element position marker
      */
-    public GrayLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
+    public FailoverLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
                                   String serviceId, int seedPosition) {
         this.serviceId = serviceId;
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
@@ -80,52 +83,40 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
             return new EmptyResponse();
         }
 
-        RequestDataContext dataContext = (RequestDataContext) request.getContext();
-        HttpHeaders headers = dataContext.getClientRequest().getHeaders();
+        // 从ThreadLocal中获取部署环境标记
+        String envTag = FailoverRequestContextHolder.getEnvTag();
 
-        // 判断是否为总社请求
-        if (headers.get(BizConstant.ENV) == null ||
-                headers.get(BizConstant.ENV).get(0).equals(BizConstant.ZS)) {
+        // 总社服务实例列表，zs标记或者没有任何标记，视为总社服务实例
+        List<ServiceInstance> zsInstances = instances.stream()
+                .filter(instance -> !instance.getMetadata().containsKey(BizConstant.ENV_HEADER)
+                        || (instance.getMetadata().containsKey(BizConstant.ENV_HEADER) && instance.getMetadata().get(BizConstant.ENV_HEADER).equals(BizConstant.ZS_ENV_VALUE)))
+                .collect(Collectors.toList());
 
-            // 总社节点请求，得到总社服务实例列表
-            List<ServiceInstance> findInstances = instances.stream()
-                    .filter(instance -> instance.getMetadata().get(BizConstant.ENV) == null
-                            || instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.ZS))
-                    .collect(Collectors.toList());
+        // 东坝服务实例列表，db标记，视为东坝服务实例
+        List<ServiceInstance> dbInstances = instances.stream()
+                .filter(instance -> instance.getMetadata().containsKey(BizConstant.ENV_HEADER) && instance.getMetadata().get(BizConstant.ENV_HEADER).equals(BizConstant.DB_ENV_VALUE))
+                .collect(Collectors.toList());
 
-            if (findInstances.size() > 0) {
-                instances = findInstances;
-            } else {    // 总社服务实例列表为空，则访问东坝服务实例列表
-                List<ServiceInstance> findInstances2 = instances.stream()
-                        .filter(instance -> instance.getMetadata().get(BizConstant.ENV) != null
-                                && instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.DB))
-                        .collect(Collectors.toList());
-                if (findInstances2.size() > 0) {
-                    instances = findInstances2;
-                    headers.set(BizConstant.ENV, BizConstant.DB);
-                }
+        if (envTag.equals(BizConstant.ZS_ENV_VALUE)) {
+            if (!CollectionUtils.isEmpty(zsInstances)) {
+                return roundRobinChoose(zsInstances);
+            } else {
+                FailoverRequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
+                return roundRobinChoose(dbInstances);
             }
-        } else {
-            // 非总社请求，访问东坝服务实例列表
-            List<ServiceInstance> findInstances = instances.stream()
-                    .filter(instance -> instance.getMetadata().get(BizConstant.ENV) != null
-                            && instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.DB))
-                    .collect(Collectors.toList());
-
-            if (findInstances.size() > 0) {
-                instances = findInstances;
-            } else {    // 东坝服务实例列表为空，则访问总社服务实例列表
-                List<ServiceInstance> findInstances2 = instances.stream()
-                        .filter(instance -> instance.getMetadata().get(BizConstant.ENV) == null
-                                || instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.ZS))
-                        .collect(Collectors.toList());
-                if (findInstances2.size() > 0) {
-                    instances = findInstances2;
-                    headers.set(BizConstant.ENV, BizConstant.ZS);
-                }
+        } else if (envTag.equals(BizConstant.DB_ENV_VALUE)) {
+            if (!CollectionUtils.isEmpty(dbInstances)) {
+                return roundRobinChoose(dbInstances);
+            } else {
+                FailoverRequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
+                return roundRobinChoose(zsInstances);
             }
         }
 
+        return roundRobinChoose(instances);
+    }
+
+    private Response<ServiceInstance> roundRobinChoose(List<ServiceInstance> instances) {
         // 随机正数值 ++i
         int pos = Math.abs(this.position.incrementAndGet());
 
@@ -133,4 +124,5 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
         return new DefaultResponse(instance);
     }
+
 }

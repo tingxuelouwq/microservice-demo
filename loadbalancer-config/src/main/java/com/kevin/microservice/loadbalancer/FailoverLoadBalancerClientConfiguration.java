@@ -16,14 +16,14 @@ import org.springframework.core.env.Environment;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnDiscoveryEnabled
-public class GrayLoadBalancerClientConfiguration {
+public class FailoverLoadBalancerClientConfiguration {
 
     @Bean
     @ConditionalOnBean(LoadBalancerClientFactory.class)
     public ReactorLoadBalancer<ServiceInstance> grayLoadBalancer(Environment environment,
                                                                    LoadBalancerClientFactory loadBalancerClientFactory) {
         String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        return new GrayLoadBalancer(loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId);
+        return new FailoverLoadBalancer(loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId);
     }
 }
 

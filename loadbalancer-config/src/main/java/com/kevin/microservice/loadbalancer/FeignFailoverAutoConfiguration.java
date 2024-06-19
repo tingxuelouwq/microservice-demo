@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
  * 2024/6/19 15:08<br/>
  */
 @Configuration(proxyBeanMethods = false)
-public class FeignGrayAutoConfiguration {
+public class FeignFailoverAutoConfiguration {
 
     @Bean
     @ConditionalOnClass(RequestInterceptor.class)
-    public FeignGrayInterceptor feignGrayInterceptor() {
-        return new FeignGrayInterceptor();
+    public FeignFailovernterceptor feignFailovernterceptor() {
+        return new FeignFailovernterceptor();
     }
 }

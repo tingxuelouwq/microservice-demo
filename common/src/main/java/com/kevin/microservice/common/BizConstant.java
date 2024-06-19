@@ -6,7 +6,7 @@ package com.kevin.microservice.common;
  */
 public interface BizConstant {
 
-    String ENV = "env";
-    String ZS = "zs";
-    String DB = "db";
+    String ENV_HEADER = "env";
+    String ZS_ENV_VALUE = "zs";
+    String DB_ENV_VALUE = "db";
 }

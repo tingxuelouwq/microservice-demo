@@ -24,7 +24,7 @@ public class GlobalGrayFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-        logger.info("request-env: {}", headers.getFirst(BizConstant.ENV));
+        logger.info("request-env: {}", headers.getFirst(BizConstant.ENV_HEADER));
         return chain.filter(exchange);
     }
 }

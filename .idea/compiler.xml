@@ -25,20 +25,25 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="common" target="11" />
+      <module name="consumer" target="11" />
       <module name="consumer-9000" target="11" />
       <module name="consumer-9001" target="11" />
       <module name="consumer-9002" target="11" />
       <module name="eureka" target="11" />
+      <module name="feign" target="11" />
+      <module name="gateway" target="11" />
       <module name="gateway-9527" target="11" />
       <module name="gateway-9528" target="11" />
       <module name="loadbalancer-config" target="11" />
       <module name="microservice-demo" target="11" />
+      <module name="producer" target="11" />
       <module name="producer-9020" target="11" />
       <module name="producer-9021" target="11" />
       <module name="producer-feign" target="11" />
       <module name="sub-producer-9030" target="11" />
       <module name="sub-producer-9031" target="11" />
       <module name="sub-producer-feign" target="11" />
+      <module name="websocket" target="11" />
       <module name="websocket-9050" target="11" />
     </bytecodeTargetLevel>
   </component>

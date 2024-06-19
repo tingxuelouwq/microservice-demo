@@ -1,5 +1,6 @@
 package com.kevin.microservice.loadbalancer;
 
+import com.kevin.microservice.common.BizConstant;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -12,7 +13,7 @@ import java.util.Enumeration;
  * kevin<br/>
  * 2024/6/19 14:28<br/>
  */
-public class FeignGrayInterceptor implements RequestInterceptor {
+public class FeignFailovernterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
@@ -23,8 +24,16 @@ public class FeignGrayInterceptor implements RequestInterceptor {
             if (headerNames != null) {
                 while (headerNames.hasMoreElements()) {
                     String name = headerNames.nextElement();
-                    String values = request.getHeader(name);
-                    template.header(name, values);
+                    String value = request.getHeader(name);
+                    template.header(name, value);
+
+                    if (name.equals(BizConstant.ENV_HEADER)) {
+                        if (value.equals(BizConstant.ZS_ENV_VALUE)) {
+                            FailoverRequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
+                        } else if (value.equals(BizConstant.DB_ENV_VALUE)) {
+                            FailoverRequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
+                        }
+                    }
                 }
             }
         }

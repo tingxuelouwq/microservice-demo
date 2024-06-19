@@ -32,20 +32,20 @@ public class ConsumerController {
 
     @GetMapping("/simple-query")
     public String simpleQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        String info = "appName: " + appName + ", serverPort: " + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV);
+        String info = "appName: " + appName + ", serverPort: " + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER);
         logger.info(info);
         return info;
     }
 
     @GetMapping("/query")
     public String query(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV));
+        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV_HEADER));
         return producerFeignService.query(name);
     }
 
     @GetMapping("/sub-query")
     public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV));
+        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV_HEADER));
         return producerFeignService.subQuery(name);
     }
 
