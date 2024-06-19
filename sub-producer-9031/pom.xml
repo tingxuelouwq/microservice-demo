@@ -30,6 +30,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.kevin.microservice</groupId>
+            <artifactId>loadbalancer-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

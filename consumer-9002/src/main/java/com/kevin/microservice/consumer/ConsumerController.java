@@ -1,5 +1,6 @@
 package com.kevin.microservice.consumer;
 
+import com.kevin.microservice.common.BizConstant;
 import com.kevin.microservice.feign.ProducerFeignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,20 +32,20 @@ public class ConsumerController {
 
     @GetMapping("/simple-query")
     public String simpleQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        String info = "appName: " + appName + ", serverPort: " + serverPort + ", request-gray: " + request.getHeader("gray-tag");
+        String info = "appName: " + appName + ", serverPort: " + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV);
         logger.info(info);
         return info;
     }
 
     @GetMapping("/query")
     public String query(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        logger.info("appName: {}, serverPort: {}, request-gray: {}", appName, serverPort, request.getHeader("gray-tag"));
+        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV));
         return producerFeignService.query(name);
     }
 
     @GetMapping("/sub-query")
     public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        logger.info("appName: {}, serverPort: {}, request-gray: {}", appName, serverPort, request.getHeader("gray-tag"));
+        logger.info("appName: {}, serverPort: {}, request-env: {}", appName, serverPort, request.getHeader(BizConstant.ENV));
         return producerFeignService.subQuery(name);
     }
 

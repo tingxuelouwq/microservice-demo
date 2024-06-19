@@ -10,4 +10,4 @@ spring:
         instance-id: microservice-sub-producer-9031
         prefer-ip-address: true
         metadata:
-          gray-tag: true
+          env: db

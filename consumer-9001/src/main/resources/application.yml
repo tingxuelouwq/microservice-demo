@@ -10,7 +10,7 @@ spring:
         instance-id: microservice-consumer-9001
         prefer-ip-address: true
         metadata:
-          gray-tag: false
+          env: zs
 
 feign:
   circuitbreaker:

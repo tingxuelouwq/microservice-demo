@@ -21,6 +21,7 @@
         <module>eureka</module>
         <module>websocket-9050</module>
 
+        <module>common</module>
         <module>loadbalancer-config</module>
         <module>gateway-9527</module>
         <module>gateway-9528</module>

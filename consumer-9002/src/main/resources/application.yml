@@ -10,7 +10,7 @@ spring:
         instance-id: microservice-consumer-9002
         prefer-ip-address: true
         metadata:
-          gray-tag: true
+          env: db
 feign:
   circuitbreaker:
     enabled: true

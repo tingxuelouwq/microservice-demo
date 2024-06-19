@@ -1,5 +1,6 @@
 package com.kevin.microservice.loadbalancer;
 
+import com.kevin.microservice.common.BizConstant;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -82,30 +83,46 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
         RequestDataContext dataContext = (RequestDataContext) request.getContext();
         HttpHeaders headers = dataContext.getClientRequest().getHeaders();
 
-        // 判断是否为灰度发布（请求）
-        if (headers.get("gray-tag") != null &&
-                headers.get("gray-tag").get(0).equals("true")) {
+        // 判断是否为总社请求
+        if (headers.get(BizConstant.ENV) == null ||
+                headers.get(BizConstant.ENV).get(0).equals(BizConstant.ZS)) {
 
-            // 灰度发布请求，得到新服务实例列表
+            // 总社节点请求，得到总社服务实例列表
             List<ServiceInstance> findInstances = instances.stream()
-                    .filter(instance -> instance.getMetadata().get("gray-tag") != null
-                            && instance.getMetadata().get("gray-tag").equals("true"))
+                    .filter(instance -> instance.getMetadata().get(BizConstant.ENV) == null
+                            || instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.ZS))
                     .collect(Collectors.toList());
 
             if (findInstances.size() > 0) {
-                // 存在灰度发布节点
                 instances = findInstances;
+            } else {    // 总社服务实例列表为空，则访问东坝服务实例列表
+                List<ServiceInstance> findInstances2 = instances.stream()
+                        .filter(instance -> instance.getMetadata().get(BizConstant.ENV) != null
+                                && instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.DB))
+                        .collect(Collectors.toList());
+                if (findInstances2.size() > 0) {
+                    instances = findInstances2;
+                    headers.set(BizConstant.ENV, BizConstant.DB);
+                }
             }
         } else {
-            // 非灰度发布请求，灰度发布测试请求，得到新服务实例列表
+            // 非总社请求，访问东坝服务实例列表
             List<ServiceInstance> findInstances = instances.stream()
-                    .filter(instance -> instance.getMetadata().get("gray-tag") == null ||
-                            !instance.getMetadata().get("gray-tag").equals("true"))
+                    .filter(instance -> instance.getMetadata().get(BizConstant.ENV) != null
+                            && instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.DB))
                     .collect(Collectors.toList());
 
             if (findInstances.size() > 0) {
-                // 存在非灰度发布节点
                 instances = findInstances;
+            } else {    // 东坝服务实例列表为空，则访问总社服务实例列表
+                List<ServiceInstance> findInstances2 = instances.stream()
+                        .filter(instance -> instance.getMetadata().get(BizConstant.ENV) == null
+                                || instance.getMetadata().get(BizConstant.ENV).equals(BizConstant.ZS))
+                        .collect(Collectors.toList());
+                if (findInstances2.size() > 0) {
+                    instances = findInstances2;
+                    headers.set(BizConstant.ENV, BizConstant.ZS);
+                }
             }
         }
 

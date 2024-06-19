@@ -1,5 +1,6 @@
 package com.kevin.microservice.gateway;
 
+import com.kevin.microservice.common.BizConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -23,7 +24,7 @@ public class GlobalGrayFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-        logger.info("request-gray: {}", headers.getFirst("gray-tag"));
+        logger.info("request-env: {}", headers.getFirst(BizConstant.ENV));
         return chain.filter(exchange);
     }
 }

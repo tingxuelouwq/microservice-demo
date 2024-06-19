@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/consumer-9002/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/gateway-9527/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gateway-9527/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/common/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gateway-9528/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gateway-9528/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />

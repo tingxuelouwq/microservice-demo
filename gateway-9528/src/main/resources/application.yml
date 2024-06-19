@@ -12,7 +12,7 @@ spring:
         instance-id: microservice-gateway-9528
         prefer-ip-address: true
         metadata:
-          gray-tag: true
+          env: db
     gateway:
 #      discovery:
 #        locator:
