@@ -5,11 +5,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.EmptyResponse;
-import org.springframework.cloud.client.loadbalancer.Request;
-import org.springframework.cloud.client.loadbalancer.Response;
+import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.loadbalancer.core.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
@@ -83,8 +81,15 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
             return new EmptyResponse();
         }
 
-        // 从ThreadLocal中获取部署环境标记
-        String envTag = FailoverRequestContextHolder.getEnvTag();
+        log.info("thread: " + Thread.currentThread().getName());
+
+        RequestDataContext dataContext = (RequestDataContext) request.getContext();
+        HttpHeaders headers = dataContext.getClientRequest().getHeaders();
+
+        String envTag = "";
+        if (headers.containsKey(BizConstant.ENV_HEADER)) {
+            envTag = headers.get(BizConstant.ENV_HEADER).get(0);
+        }
 
         // 总社服务实例列表，zs标记或者没有任何标记，视为总社服务实例
         List<ServiceInstance> zsInstances = instances.stream()
@@ -101,6 +106,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
             if (!CollectionUtils.isEmpty(zsInstances)) {
                 return roundRobinChoose(zsInstances);
             } else {
+                log.info("即将进行自动故障转移，zs->db");
                 FailoverRequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
                 return roundRobinChoose(dbInstances);
             }
@@ -108,6 +114,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
             if (!CollectionUtils.isEmpty(dbInstances)) {
                 return roundRobinChoose(dbInstances);
             } else {
+                log.info("即将进行自动故障转移，db->zs");
                 FailoverRequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
                 return roundRobinChoose(zsInstances);
             }

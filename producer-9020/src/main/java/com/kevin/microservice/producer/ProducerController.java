@@ -29,7 +29,7 @@ public class ProducerController {
 
     @GetMapping("/query")
     public String query(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        String result = "query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER);
+        String result = "query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER) + ", thread: " + Thread.currentThread().getName();
         System.out.println(result);
         return result;
     }
@@ -41,7 +41,7 @@ public class ProducerController {
 
     @GetMapping("/sub-query")
     public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        logger.info("query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER));
+        logger.info("query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER) + ", thread: " + Thread.currentThread().getName());
         String result = subProducerFeignService.subQuery(name);
         System.out.println(result);
         return result;

@@ -15,4 +15,8 @@ public class FailoverRequestContextHolder {
     public static String getEnvTag() {
         return envTag.get();
     }
+
+    public static void clear() {
+        envTag.remove();
+    }
 }

@@ -20,7 +20,7 @@ public class SubProducerController {
 
     @GetMapping("/sub-query")
     public String subQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
-        String result = "sub-query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER);
+        String result = "sub-query:" + name + ", serverPort=" + serverPort + ", request-env: " + request.getHeader(BizConstant.ENV_HEADER) + ", thread: " + Thread.currentThread().getName();
         System.out.println(result);
         return result;
     }

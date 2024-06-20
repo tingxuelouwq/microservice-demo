@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="consumer-9000" />
         <module name="consumer-9001" />
         <module name="producer-9021" />
         <module name="producer-9020" />

@@ -9,7 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/gateway-9527/gateway-9527.iml" filepath="$PROJECT_DIR$/gateway-9527/gateway-9527.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway-9528/gateway-9528.iml" filepath="$PROJECT_DIR$/gateway-9528/gateway-9528.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadbalancer-config/loadbalancer-config.iml" filepath="$PROJECT_DIR$/loadbalancer-config/loadbalancer-config.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../microservice-demo.iml" filepath="$PROJECT_DIR$/../microservice-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservice-demo.iml" filepath="$PROJECT_DIR$/microservice-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-9020/producer-9020.iml" filepath="$PROJECT_DIR$/producer-9020/producer-9020.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-9021/producer-9021.iml" filepath="$PROJECT_DIR$/producer-9021/producer-9021.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-feign/producer-feign.iml" filepath="$PROJECT_DIR$/producer-feign/producer-feign.iml" />
