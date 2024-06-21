@@ -1,10 +1,10 @@
-package com.kevin.microservice.loadbalancer;
+package com.kevin.microservice.gateway;
 
 /**
  * kevin<br/>
  * 2024/6/19 21:18<br/>
  */
-public class FailoverRequestContextHolder {
+public class RequestContextHolder {
 
     private static final ThreadLocal<String> envTag = new ThreadLocal<>();
 

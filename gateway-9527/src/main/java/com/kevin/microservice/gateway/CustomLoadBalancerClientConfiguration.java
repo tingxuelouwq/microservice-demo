@@ -1,6 +1,5 @@
-package com.kevin.microservice.loadbalancer;
+package com.kevin.microservice.gateway;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
@@ -16,14 +15,13 @@ import org.springframework.core.env.Environment;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnDiscoveryEnabled
-public class FailoverLoadBalancerClientConfiguration {
+public class CustomLoadBalancerClientConfiguration {
 
     @Bean
-    @ConditionalOnBean(LoadBalancerClientFactory.class)
-    public ReactorLoadBalancer<ServiceInstance> grayLoadBalancer(Environment environment,
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,
                                                                    LoadBalancerClientFactory loadBalancerClientFactory) {
-        String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        return new FailoverLoadBalancer(loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId);
+        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        return new CustomReactorServiceInstanceLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);
     }
 }
 

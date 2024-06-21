@@ -24,7 +24,6 @@
         <module>common</module>
         <module>loadbalancer-config</module>
         <module>gateway-9527</module>
-        <module>gateway-9528</module>
         <module>consumer-9001</module>
         <module>consumer-9002</module>
         <module>producer-9020</module>

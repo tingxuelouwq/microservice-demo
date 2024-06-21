@@ -16,7 +16,6 @@
         <module name="sub-producer-feign" />
         <module name="producer-feign" />
         <module name="loadbalancer-config" />
-        <module name="gateway-9528" />
         <module name="common" />
         <module name="gateway-9527" />
         <module name="consumer-9002" />

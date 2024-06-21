@@ -1,7 +1,6 @@
 package com.kevin.microservice.gateway;
 
 import com.kevin.microservice.common.BizConstant;
-import com.kevin.microservice.loadbalancer.FailoverRequestContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -29,11 +28,11 @@ public class GlobalFailoverFilter implements GlobalFilter {
         String envHeaderValue = headers.getFirst(BizConstant.ENV_HEADER);
         logger.info("thread: {}, request-env: {}", Thread.currentThread().getName(), envHeaderValue);
 
-        String envTag = FailoverRequestContextHolder.getEnvTag();
+        String envTag = RequestContextHolder.getEnvTag();
         if (StringUtils.hasLength(envTag)) {
             logger.info("自动故障转移, old-request-env: {}, new-request-env: {}", envHeaderValue, envTag);
             // 清除线程局部变量标记
-            FailoverRequestContextHolder.clear();
+            RequestContextHolder.clear();
             // 将部署环境标记放入请求头中
             ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
                     .header(BizConstant.ENV_HEADER, envTag)

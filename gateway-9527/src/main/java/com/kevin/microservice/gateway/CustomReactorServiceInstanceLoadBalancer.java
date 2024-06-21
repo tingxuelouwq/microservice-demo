@@ -1,4 +1,4 @@
-package com.kevin.microservice.loadbalancer;
+package com.kevin.microservice.gateway;
 
 import com.kevin.microservice.common.BizConstant;
 import org.apache.commons.logging.Log;
@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+public class CustomReactorServiceInstanceLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
     private static final Log log = LogFactory.getLog(RoundRobinLoadBalancer.class);
 
@@ -31,7 +31,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
      * {@link ServiceInstanceListSupplier} that will be used to get available instances
      * @param serviceId id of the service for which to choose an instance
      */
-    public FailoverLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
+    public CustomReactorServiceInstanceLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
                                   String serviceId) {
         this(serviceInstanceListSupplierProvider, serviceId, new Random().nextInt(1000));
     }
@@ -42,7 +42,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
      * @param serviceId id of the service for which to choose an instance
      * @param seedPosition Round Robin element position marker
      */
-    public FailoverLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
+    public CustomReactorServiceInstanceLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
                                   String serviceId, int seedPosition) {
         this.serviceId = serviceId;
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
@@ -107,7 +107,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
                 return roundRobinChoose(zsInstances);
             } else {
                 log.info("即将进行自动故障转移，zs->db");
-                FailoverRequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
+                RequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
                 return roundRobinChoose(dbInstances);
             }
         } else if (envTag.equals(BizConstant.DB_ENV_VALUE)) {
@@ -115,7 +115,7 @@ public class FailoverLoadBalancer implements ReactorServiceInstanceLoadBalancer 
                 return roundRobinChoose(dbInstances);
             } else {
                 log.info("即将进行自动故障转移，db->zs");
-                FailoverRequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
+                RequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
                 return roundRobinChoose(zsInstances);
             }
         }

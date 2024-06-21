@@ -1,11 +1,9 @@
 package com.kevin.microservice.loadbalancer;
 
-import com.kevin.microservice.common.BizConstant;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,8 +21,6 @@ public class FeignFailovernterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
         logger.info("thread: {}", Thread.currentThread().getName());
-        String envTag = FailoverRequestContextHolder.getEnvTag();
-
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
@@ -33,14 +29,6 @@ public class FeignFailovernterceptor implements RequestInterceptor {
                 while (headerNames.hasMoreElements()) {
                     String name = headerNames.nextElement();
                     String value = request.getHeader(name);
-
-                    if (name.equals(BizConstant.ENV_HEADER) && StringUtils.hasLength(envTag)) {
-                        logger.info("自动故障转移, old-request-env: {}, new-request-env: {}", value, envTag);
-                        value = envTag;
-                        // 清除线程局部变量标记
-                        FailoverRequestContextHolder.clear();
-                    }
-
                     template.header(name, value);
                 }
             }
