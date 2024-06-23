@@ -1,6 +1,7 @@
 package com.kevin.microservice.gateway;
 
-import com.kevin.microservice.common.BizConstant;
+import com.kevin.microservice.BizConstant;
+import com.kevin.microservice.RequestContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

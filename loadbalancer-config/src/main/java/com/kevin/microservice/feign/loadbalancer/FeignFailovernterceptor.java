@@ -1,4 +1,4 @@
-package com.kevin.microservice.loadbalancer;
+package com.kevin.microservice.feign.loadbalancer;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

@@ -1,4 +1,4 @@
-package com.kevin.microservice.common;
+package com.kevin.microservice;
 
 /**
  * kevin<br/>

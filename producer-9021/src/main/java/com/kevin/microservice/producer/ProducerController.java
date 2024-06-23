@@ -1,6 +1,6 @@
 package com.kevin.microservice.producer;
 
-import com.kevin.microservice.common.BizConstant;
+import com.kevin.microservice.BizConstant;
 import com.kevin.microservice.feign.SubProducerFeignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

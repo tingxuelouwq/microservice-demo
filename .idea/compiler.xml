@@ -10,13 +10,13 @@
         <module name="producer-9021" />
         <module name="producer-9020" />
         <module name="eureka" />
+        <module name="producer-9022" />
         <module name="sub-producer-9030" />
         <module name="websocket-9050" />
         <module name="sub-producer-9031" />
         <module name="sub-producer-feign" />
         <module name="producer-feign" />
         <module name="loadbalancer-config" />
-        <module name="common" />
         <module name="gateway-9527" />
         <module name="consumer-9002" />
       </profile>
@@ -37,6 +37,7 @@
       <module name="producer" target="11" />
       <module name="producer-9020" target="11" />
       <module name="producer-9021" target="11" />
+      <module name="producer-9022" target="11" />
       <module name="producer-feign" target="11" />
       <module name="sub-producer-9030" target="11" />
       <module name="sub-producer-9031" target="11" />
@@ -44,5 +45,10 @@
       <module name="websocket" target="11" />
       <module name="websocket-9050" target="11" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="producer-9022" options="" />
+    </option>
   </component>
 </project>

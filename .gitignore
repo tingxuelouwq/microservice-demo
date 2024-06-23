@@ -1,5 +1,6 @@
-target
-.idea
-.mvn
-HELP.md
-*.iml
+target/
+.mvn/
+**/*.iml
+**/HELP.md
+**/mvnw
+**/mvnw.cmd

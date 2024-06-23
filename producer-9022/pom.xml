@@ -8,27 +8,39 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>loadbalancer-config</artifactId>
+    <artifactId>producer-9022</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>loadbalancer-config</name>
-    <description>loadbalancer-config</description>
+    <name>producer-9022</name>
+    <description>producer-9022</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kevin.microservice</groupId>
+            <artifactId>sub-producer-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kevin.microservice</groupId>
+            <artifactId>loadbalancer-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

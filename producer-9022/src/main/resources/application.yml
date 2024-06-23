@@ -1,0 +1,13 @@
+server:
+  port: 9022
+
+spring:
+  application:
+    name: microservice-producer
+  cloud:
+    consul:
+      discovery:
+        instance-id: microservice-producer-9022
+        prefer-ip-address: true
+        metadata:
+          env: db

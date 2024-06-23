@@ -1,4 +1,4 @@
-package com.kevin.microservice.gateway;
+package com.kevin.microservice.loadbalancer.core;
 
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.ServiceInstance;

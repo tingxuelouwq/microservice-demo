@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/consumer-9001/consumer-9001.iml" filepath="$PROJECT_DIR$/consumer-9001/consumer-9001.iml" />
       <module fileurl="file://$PROJECT_DIR$/consumer-9002/consumer-9002.iml" filepath="$PROJECT_DIR$/consumer-9002/consumer-9002.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka/eureka.iml" filepath="$PROJECT_DIR$/eureka/eureka.iml" />
@@ -11,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/microservice-demo.iml" filepath="$PROJECT_DIR$/microservice-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-9020/producer-9020.iml" filepath="$PROJECT_DIR$/producer-9020/producer-9020.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-9021/producer-9021.iml" filepath="$PROJECT_DIR$/producer-9021/producer-9021.iml" />
+      <module fileurl="file://$PROJECT_DIR$/producer-9022/producer-9022.iml" filepath="$PROJECT_DIR$/producer-9022/producer-9022.iml" />
       <module fileurl="file://$PROJECT_DIR$/producer-feign/producer-feign.iml" filepath="$PROJECT_DIR$/producer-feign/producer-feign.iml" />
       <module fileurl="file://$PROJECT_DIR$/sub-producer-9030/sub-producer-9030.iml" filepath="$PROJECT_DIR$/sub-producer-9030/sub-producer-9030.iml" />
       <module fileurl="file://$PROJECT_DIR$/sub-producer-9031/sub-producer-9031.iml" filepath="$PROJECT_DIR$/sub-producer-9031/sub-producer-9031.iml" />

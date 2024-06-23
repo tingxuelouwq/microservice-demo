@@ -1,4 +1,4 @@
-package com.kevin.microservice.gateway;
+package com.kevin.microservice;
 
 /**
  * kevin<br/>
