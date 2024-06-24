@@ -1,4 +1,4 @@
-package com.example.producer9022;
+package com.kevin.microservice.producer;
 
 import com.kevin.microservice.BizConstant;
 import com.kevin.microservice.feign.SubProducerFeignService;

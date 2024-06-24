@@ -107,7 +107,6 @@ public class CustomReactorServiceInstanceLoadBalancer implements ReactorServiceI
             if (!CollectionUtils.isEmpty(zsInstances)) {
                 return roundRobinChoose(zsInstances);
             } else {
-                log.info("即将进行自动故障转移，zs->db");
                 RequestContextHolder.setEnvTag(BizConstant.DB_ENV_VALUE);
                 return roundRobinChoose(dbInstances);
             }
@@ -115,7 +114,6 @@ public class CustomReactorServiceInstanceLoadBalancer implements ReactorServiceI
             if (!CollectionUtils.isEmpty(dbInstances)) {
                 return roundRobinChoose(dbInstances);
             } else {
-                log.info("即将进行自动故障转移，db->zs");
                 RequestContextHolder.setEnvTag(BizConstant.ZS_ENV_VALUE);
                 return roundRobinChoose(zsInstances);
             }
