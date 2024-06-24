@@ -6,11 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * kevin<br/>
@@ -29,6 +33,12 @@ public class ConsumerController {
 
     @Autowired
     private ProducerFeignService producerFeignService;
+
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
 
     @GetMapping("/simple-query")
     public String simpleQuery(@RequestParam(value = "name") String name, HttpServletRequest request) {
@@ -60,5 +70,20 @@ public class ConsumerController {
             }).start();
         }
         Thread.currentThread().join();
+    }
+
+    @GetMapping("/getAllServices")
+    public List<String> getAllServices() {
+        return discoveryClient.getServices();
+    }
+
+    @GetMapping("/getInstances")
+    public List<ServiceInstance> getInstances(String serviceId) {
+        return discoveryClient.getInstances(serviceId);
+    }
+
+    @GetMapping("/getServiceUri")
+    public String getServiceUri(String serviceId) {
+        return loadBalancerClient.choose(serviceId).getUri().toString();
     }
 }
